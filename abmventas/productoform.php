@@ -98,7 +98,7 @@ $aCategorias=$categoria->obtenerTodos();
                     <div class="col-8 form-group">
                         <label for="txtDescripcion">Descripción</label>
                         <textarea type="text" class="form-control input" id="txtDescripcion" name="txtDescripcion" 
-                        value="<?php echo $producto->descripcion ?>"></textarea>
+                        ><?php echo $producto->descripcion ?></textarea>
                     </div>
                     <div class="col-4 form-group">
                         <label for="lstCategoria">Categoría</label>

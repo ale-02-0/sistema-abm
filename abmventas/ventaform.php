@@ -36,6 +36,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
   $venta->obtenerPorId();
 
 } //GET
+
 $cliente = new Cliente();
 $aClientes = $cliente->obtenerTodos();
 
@@ -83,8 +84,8 @@ $aProductos = $producto->cargarGrilla();
         <div class="row">
           <div class="col-3 form-group">
             <label for="txtFecha">Fecha</label>
-            <input type="datetime-local" class="form-control input" id="txtFecha" value="2020-04-22" name="txtFecha" 
-           required>
+            <input type="date"class="form-control" name="txtFecha" id="txtFecha"
+             value="<?php echo $venta->fecha ;?>" required>
           </div>
           <div class="col-9 form-group">
             <label for="lstCliente">Cliente</label>
@@ -99,7 +100,7 @@ $aProductos = $producto->cargarGrilla();
               <?php endforeach; ?>
             </select>
           </div>
-          <div class="col-9 form-group">
+          <div class="col-8 form-group">
             <label for="lstProducto">Producto</label> 
             <select required="" class="form-control" name="lstProducto" id="lstProducto">
               <option value="" disabled selected>Seleccionar</option>
@@ -112,16 +113,16 @@ $aProductos = $producto->cargarGrilla();
             <?php endforeach ;?>
             </select>
           </div>
-          <div class="col-3 form-group">
+          <div class="col-2 form-group">
             <label for="txtCantidad">Cantidad</label>
             <input type="text" class="form-control input" id="txtCantidad" name="txtCantidad" value="<?php echo $venta->cantidad ;?>" required>
           </div>
-          <div class="col-4 form-group">
+          <div class="col-2 form-group">
             <label for="txtImporte">Importe</label>
             <input type="text" class="form-control input" id="txtImporte" name="txtImporte" value="<?php echo $venta->importe ;?>" required >
           </div>
       
-          <div class="col-4 form-group">
+          <div class="col-2 form-group">
             <label for="txtTotal">Total</label>
             <input type="text" class="form-control input" id="txtTotal" name="txtTotal" value="<?php echo $venta->total ;?>" required>
           </div>

@@ -20,7 +20,7 @@ class Venta {
         public function __get($propiedad) { return $this->$propiedad;}
 
         public function __set($propiedad, $valor) { $this->$propiedad = $valor; return $this;}
-        
+              
         public function cargarFormulario($request){ 
 
           $this->idventa = isset($request['id'])? $request['id'] : "";
