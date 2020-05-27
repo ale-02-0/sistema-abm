@@ -23,10 +23,11 @@ if ($_POST) {
     if (isset($_POST['btnGuardar'])) {
         if (isset($_GET['id']) && $_GET['id'] > 0) {
             $cliente->actualizar();
-        
         } else {
             $cliente->insertar();
-       print_r($_POST['btnGuardar']);exit; }
+            print_r($_POST['btnGuardar']);
+            exit;
+        }
     } else if (isset($_POST['btnBorrar'])) {
         $cliente->eliminar();
     }
@@ -75,35 +76,36 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
                     <div class="row">
                         <div class="col-6 form-group">
                             <label for="txtCuit">Cuit</label>
-                            <input type="text" class="form-control input" id="txtCuit" name="txtCuit" 
-                            value="<?php echo $cliente->cuit ?>" required>
+                            <input type="text" class="form-control input" id="txtCuit" name="txtCuit" value="<?php echo $cliente->cuit ?>" required>
                         </div>
                         <div class="col-6 form-group">
                             <label for="txtNombre">Nombre</label>
-                            <input type="text" class="form-control input" id="txtNombre" name="txtNombre" 
-                            value="<?php echo $cliente->nombre ?>" required>
+                            <input type="text" class="form-control input" id="txtNombre" name="txtNombre" value="<?php echo $cliente->nombre ?>" required>
                         </div>
                         <div class="col-6 form-group">
                             <label for="txtFechaNac">Fecha de nacimiento</label>
-                            <input type="date" class="form-control input" id="txtFechaNac" name="txtFechaNac" 
-                            value="<?php echo  $cliente->fecha_nac ?>">
+                            <input type="date" class="form-control input" id="txtFechaNac" name="txtFechaNac" value="<?php echo  $cliente->fecha_nac ?>">
                         </div>
                         <div class="col-6 form-group">
                             <label for="txtTelefono">Teléfono</label>
-                            <input type="text" class="form-control input" id="txtTelefono" name="txtTelefono" 
-                            value="<?php echo  $cliente->telefono ?>">
+                            <input type="text" class="form-control input" id="txtTelefono" name="txtTelefono" value="<?php echo  $cliente->telefono ?>">
                         </div>
                         <div class="col-6 form-group">
                             <label for="txtEmail">Correo</label>
-                            <input type="email" class="form-control input" id="txtEmail" name="txtEmail" 
-                            value="<?php echo $cliente->correo ?>" required>
+                            <input type="email" class="form-control input" id="txtEmail" name="txtEmail" value="<?php echo $cliente->correo ?>" required>
                         </div>
                     </div>
-                    <div class="row pt-2">
-                        <a href="clienteform.php" class="btn btn-primary ml-3">Nuevo</a>
-                    <button type=" submit" class="btn btn-success ml-3" name="btnGuardar" id="btnGuardar">Guardar</button>
+                
+                        <div class="row pt-2">
+                            <a href="clienteform.php" class="btn btn-primary ml-3">Nuevo</a>
+                            <button type=" submit" class="btn btn-success ml-3" name="btnGuardar" id="btnGuardar">Guardar</button>
                             <button type="submit" class="btn btn-danger ml-3" name="btnBorrar" id="btnBorrar">Borrar</button>
-                    </div>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+ 
+</button>
+
+                        </div>
+                        
                 </form>
             </div>
 
@@ -114,7 +116,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
     <!-- End of Main Content -->
 
     <!-- Footer -->
-    <?php include_once ("footer.php")?>
+    <?php include_once("footer.php") ?>
     </footer>
     <!-- End of Footer -->
 
