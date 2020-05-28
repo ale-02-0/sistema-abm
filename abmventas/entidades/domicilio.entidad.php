@@ -18,7 +18,7 @@ class Domicilio{
     }
 
     public function insertar(){
-        $mysql = new mysqli(Config::BBDD_HOST, Constante::BBDD_USUARIO, Constante::BBDD_CLAVE, Constante::BBDD_NOMBRE);
+        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         $mysql->query("INSERT INTO domicilios (
             fk_idcliente, 
             fk_tipo, 

@@ -230,7 +230,39 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
             </div>
         </div>
     </div>
+<script>
+    
+    $('#grilla').DataTable();
+        
+         function fBuscarLocalidad(){
+            idProvincia = $("#lstProvincia option:selected").val();
+            $.ajax({
+	            type: "GET",
+	            url: "abmcliente.php?do=buscarLocalidad",
+	            data: { id:idProvincia },
+	            async: true,
+	            dataType: "json",
+	            success: function (respuesta) {
+                    $("#lstLocalidad option").remove();
+                    $("<option>", {
+                        value: 0,
+                        text: "Seleccionar",
+                        disabled: true,
+                        selected: true
+                    }).appendTo("#lstLocalidad");
+                
+                    for (i = 0; i < respuesta.length; i++) {
+                        $("<option>", {
+                            value: respuesta[i]["idlocalidad"],
+                            text: respuesta[i]["nombre"]
+                            }).appendTo("#lstLocalidad");
+                        }
+                    $("#lstLocalidad").prop("selectedIndex", "0");
+	            }
+	        });
+        }
 
+</script>
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

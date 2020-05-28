@@ -17,7 +17,7 @@ class Localidad{
 
     public function obtenerPorProvincia($idProvincia){
         $aLocalidades = null;
-        $mysqli = new mysqli(Config::BBDD_HOST, Constante::BBDD_USUARIO, Constante::BBDD_CLAVE, Constante::BBDD_NOMBRE);
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         $sql = "SELECT 
             idlocalidad,
             nombre, 

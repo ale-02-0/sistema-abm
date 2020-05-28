@@ -15,7 +15,7 @@ class Provincia{
 
     public function obtenerTodos(){
         $aProvincias = null;
-        $mysqli = new mysqli(Constante::BBDD_HOST, Constante::BBDD_USUARIO, Constante::BBDD_CLAVE, Constante::BBDD_NOMBRE);
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         $resultado = $mysqli->query("SELECT 
             idprovincia,
             nombre
