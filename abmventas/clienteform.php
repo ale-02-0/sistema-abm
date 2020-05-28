@@ -2,6 +2,10 @@
 
 include_once "config.php";
 include_once "entidades/cliente.php";
+include_once "entidades/provincia.entidad.php";
+include_once "entidades/localidad.entidad.php";
+include_once "entidades/domicilio.entidad.php";
+
 
 //SESION DE USUARIO
 session_start();
@@ -67,7 +71,61 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
 
         <?php include_once("menu_nav.php"); ?>
         <!-- End of Topbar -->
-
+        <!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+      <div class="row">
+            <div class="col-12 form-group">
+                <label for="lstTipo">Tipo:</label>
+                <select name="lstTipo" id="lstTipo" class="form-control">
+                    <option value="" disabled selected>Seleccionar</option>
+                    <option value="1">Personal</option>
+                    <option value="2">Laboral</option>
+                    <option value="3">Comercial</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group">
+                <label for="lstProvincia">Provincia:</label>
+                <select name="lstProvincia" id="lstProvincia" onchange="fBuscarLocalidad();" class="form-control">
+                    <option value="" disabled selected>Seleccionar</option>
+                    <?php foreach($aProvincias as $prov): ?>
+                        <option value="<?php echo $prov->idprovincia; ?>"><?php echo $prov->nombre; ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group">
+                <label for="lstLocalidad">Localidad:</label>
+                <select name="lstLocalidad" id="lstLocalidad" class="form-control">
+                    <option value="" disabled selected>Seleccionar</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 form-group">
+                <label for="txtDireccion">Dirección:</label>
+                <input type="text" name="" id="txtDireccion" class="form-control">
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
         <div class="container-fluid">
 
             <div class="row pt-4">
@@ -95,14 +153,37 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
                             <input type="email" class="form-control input" id="txtEmail" name="txtEmail" value="<?php echo $cliente->correo ?>" required>
                         </div>
                     </div>
-                
+                    <div class="row">
+        <div class="col-12">  
+        <div class="card mb-3">
+                <div class="card-header">
+                    <i class="fa fa-table"></i> Domicilios
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-secondary fa fa-plus-circle" data-toggle="modal" data-target="#modalDomicilio">Agregar</button>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <table id="grilla" class="display" style="width:98%">
+                        <thead>
+                            <tr>
+                                <th>Tipo</th>
+                                <th>Provincia</th>
+                                <th>Localidad</th>
+                                <th>Dirección</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                    </table> 
+                 </div>
+            </div>          
+        </div>
+    </div>                
                         <div class="row pt-2">
                             <a href="clienteform.php" class="btn btn-primary ml-3">Nuevo</a>
                             <button type=" submit" class="btn btn-success ml-3" name="btnGuardar" id="btnGuardar">Guardar</button>
                             <button type="submit" class="btn btn-danger ml-3" name="btnBorrar" id="btnBorrar">Borrar</button>
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
- 
-</button>
+                            <button type="button" class="btn btn-primary ml-3" name="btnModal" id="btnModal"data-toggle="modal" data-target="#exampleModal">Domicilio</button>
+       
 
                         </div>
                         
