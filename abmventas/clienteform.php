@@ -37,9 +37,20 @@ if ($_POST) {
     }
 }
 //GET 
-if (isset($_GET['id']) && $_GET['id'] > 0) {
-    $cliente->obtenerPorId();
+if($_GET){
+    if (isset($_GET['id']) && $_GET['id'] > 0) {
+        $cliente->obtenerPorId();
+    }
+    if (isset($_GET['do']) && $_GET['do']== "buscarLocalidad"){ //llamo a la funcion de java
+        $idProvincia= $_GET ['id'];//llamo al id de provincia
+        $localidad= new Localidad();
+        $aLocalidades=$localidad->obtenerPorProvincia($idProvincia);//establezco la relacion provincia-localidad
+        echo json_encode($aLocalidades); 
+    }
 }
+//provincia
+$provincia= new Provincia();
+$aProvincias=$provincia->obtenerTodos();
 
 ?>
 
@@ -231,14 +242,13 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
         </div>
     </div>
 <script>
-    
-    $('#grilla').DataTable();
+  
         
          function fBuscarLocalidad(){
             idProvincia = $("#lstProvincia option:selected").val();
             $.ajax({
 	            type: "GET",
-	            url: "abmcliente.php?do=buscarLocalidad",
+	            url: "clienteform.php?do=buscarLocalidad",
 	            data: { id:idProvincia },
 	            async: true,
 	            dataType: "json",
