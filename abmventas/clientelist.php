@@ -64,12 +64,13 @@ $aClientes= $cliente->obtenerTodos();
                   <th>Fecha de nacimiento</th>
                   <th>Teléfono</th>
                   <th>Correo</th>
+                  <th>Domicilio</th>
                 </tr>
               <?php foreach ($aClientes as $cliente) : ; ?>
                 <tr>
                   <td><?php echo $cliente->cuit; ?></td>
-                  <td><?php echo $cliente->nombre; ?></td>
-                  <td><?php echo $cliente->fecha_nac; ?></td>
+                  <td><?php echo $cliente->nombre; ?></td>                
+                  <td><?php echo date_format(date_create($cliente->fecha_nac), 'd/m/Y '); ?></td>
                   <td><?php echo $cliente->telefono; ?></td>
                   <td><?php echo $cliente->correo; ?></td>
                   <td><?php echo $cliente->domicilio; ?></td>

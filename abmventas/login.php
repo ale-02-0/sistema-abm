@@ -17,7 +17,7 @@ if ($_POST){
 
     $entidadUsuario= new Usuario();
     $entidadUsuario->obtenerPorUsuario($usuario);
-print_r($entidadUsuario);
+
     
     //corroboramos datos. 
     if ($entidadUsuario->verificarClave($clave, $entidadUsuario->clave)){
@@ -90,11 +90,11 @@ print_r($entidadUsuario);
                   <form action=""class="user"method="POST">
                     <div class="form-group method">
                       <input type="txt" class="form-control form-control-user" id="txtUsuario" 
-                      placeholder="Introduzca usuario..." name="txtUsuario">
+                      placeholder="Introduzca usuario..." name="txtUsuario" required
                     </div>
                     <div class="form-group">
                       <input type="password" class="form-control form-control-user" id="txtClave" 
-                      placeholder=" Contraseña" name="txtClave">
+                      placeholder=" Contraseña" name="txtClave" required>
                     </div>
                     <div class="form-group">
                       <div class="custom-control custom-checkbox small">
