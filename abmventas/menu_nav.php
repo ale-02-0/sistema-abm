@@ -35,7 +35,7 @@
       </a>
       <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
         <div class="bg-white py-2 collapse-inner rounded">
-          <a class="collapse-item" href="clientelist.php">Lista de clietntes</a>
+          <a class="collapse-item" href="clientelist.php">Lista de clientes</a>
           <a class="collapse-item" href="clienteform.php">Registro de clientes</a>
         </div>
       </div>

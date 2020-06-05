@@ -57,7 +57,7 @@ class Cliente {
                 WHERE idcliente =" . $this->idcliente;
           $resultado= $mysqli->query($sql);
          
-          if ($fila=$resultado->fetch_assoc()){
+         if ($fila=$resultado->fetch_assoc()){
                     $this->nombre = $fila['nombre'];
                     $this->cuit = $fila['cuit'];
                     $this->telefono = $fila['telefono'];
@@ -94,33 +94,43 @@ class Cliente {
       }
 
       public function obtenerTodos(){
-        
+        $aCliente = null;
         $mysqli= new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO,  Config::BBDD_CLAVE,  Config::BBDD_NOMBRE);
-        $sql="SELECT idcliente,
-                      nombre,
-                      cuit,
-                      telefono,
-                      correo,
-                      fecha_nac
-              FROM clientes";
-        $resultado= $mysqli->query($sql);
-
-        $aResultado=array();
-
-          if($resultado){         
-
-            while($fila= $resultado->fetch_assoc()){              
-                $entidadAux= new Cliente();
-                $entidadAux->idcliente =$fila['idcliente'];
-                $entidadAux->nombre =$fila['nombre'];
-                $entidadAux->cuit =$fila['cuit'];
-                $entidadAux->telefono =$fila['telefono'];
-                $entidadAux->correo =$fila['correo'];
-                $entidadAux->fecha_nac=$fila['fecha_nac'];
-                $aResultado[]= $entidadAux;
+        $resultado = $mysqli->query("SELECT
+                                    A.idcliente,
+                                    A.cuit,
+                                    A.nombre,
+                                    A.telefono,
+                                    A.correo,
+          (SELECT GROUP_CONCAT('(', C.nombre, ') ', B.domicilio, ', ', D.nombre, ', ', E.nombre SEPARATOR '<br>')	
+          FROM domicilios B 
+          INNER JOIN tipo_domicilios C ON C.idtipo = B.fk_tipo
+          INNER JOIN localidades D ON D.idlocalidad = B.fk_idlocalidad
+          INNER JOIN provincias E ON E.idprovincia = D.fk_idprovincia
+          WHERE B.fk_idcliente = A.idcliente
+          ) as domicilio
+      FROM
+        clientes A
+      ORDER BY
+        idcliente DESC");
+         if (!$mysqli->query($sql)) {
+          printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+      }
+              if($resultado){
+                  while ($fila = $resultado->fetch_assoc()) {
+                      $obj = new Cliente();
+                      $obj->idcliente = $fila["idcliente"];
+                      $obj->cuit = $fila["cuit"];
+                      $obj->nombre = $fila["nombre"];
+                      $obj->telefono = $fila["telefono"];
+                      $obj->correo = $fila["correo"];
+                      $obj->domicilio = $fila["domicilio"];
+                      $aCliente[] = $obj;
+      
+                  }
+                  return $aCliente;
               }
           }
-        return $aResultado;
-      }
+
 }
 ?>

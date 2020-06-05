@@ -15,7 +15,7 @@ class Localidad{
         return $this;
     }
 
-    public function obtenerPorProvincia($idProvincia){
+    public function obtenerPorProvincia($idprovincia){
         $aLocalidades = null;
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         $sql = "SELECT 
@@ -23,8 +23,11 @@ class Localidad{
             nombre, 
             cod_postal
             FROM localidades 
-            WHERE fk_idprovincia = $idProvincia
+            WHERE fk_idprovincia = $idprovincia
             ORDER BY idlocalidad DESC";
+               if (!$mysqli->query($sql)) {
+                printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+            }
         $resultado = $mysqli->query($sql);
 
         while ($fila = $resultado->fetch_assoc()) {

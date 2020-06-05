@@ -72,6 +72,7 @@ $aClientes= $cliente->obtenerTodos();
                   <td><?php echo $cliente->fecha_nac; ?></td>
                   <td><?php echo $cliente->telefono; ?></td>
                   <td><?php echo $cliente->correo; ?></td>
+                  <td><?php echo $cliente->domicilio; ?></td>
                   <td>
                     <a href="clienteform.php?id=<?php echo $cliente->idcliente; ?>">
                     <i class="fas fa-search"></i>

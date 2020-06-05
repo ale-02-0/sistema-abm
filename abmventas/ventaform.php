@@ -43,6 +43,23 @@ $aClientes = $cliente->obtenerTodos();
 $producto = new Producto();
 $aProductos = $producto->cargarGrilla();
 
+if($_GET){
+  
+if(isset($_GET["do"]) && $_GET["do"] == "buscarProducto"){
+  $idProducto = $_GET["id"];
+  $producto = new Producto();
+  $producto->idproducto = $idProducto; 
+  $producto->obtenerPorId();
+  echo json_encode($producto->precio);
+  exit;
+}
+if (isset($_GET['id']) && $_GET['id'] > 0) {
+  $producto->obtenerPorId();
+}
+
+
+}//GET 
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -102,7 +119,7 @@ $aProductos = $producto->cargarGrilla();
           </div>
           <div class="col-8 form-group">
             <label for="lstProducto">Producto</label> 
-            <select required="" class="form-control" name="lstProducto" id="lstProducto">
+            <select required="" class="form-control" name="lstProducto" id="lstProducto" onchange="fBuscarPrecio();">
               <option value="" disabled selected>Seleccionar</option>
               <?php foreach ($aProductos as $producto) : ?>
                 <?php if ($producto->idproducto == $venta->fk_idproducto) : ?>
@@ -115,10 +132,10 @@ $aProductos = $producto->cargarGrilla();
           </div>
           <div class="col-2 form-group">
             <label for="txtCantidad">Cantidad</label>
-            <input type="text" class="form-control input" id="txtCantidad" name="txtCantidad" value="<?php echo $venta->cantidad ;?>" required>
+            <input type="text" class="form-control input" id="txtCantidad" name="txtCantidad" onchange="fCalcularTotal();" value="<?php echo $venta->cantidad ;?>" required>
           </div>
           <div class="col-2 form-group">
-            <label for="txtImporte">Importe</label>
+            <label for="txtImporte" >Importe</label>
             <input type="text" class="form-control input" id="txtImporte" name="txtImporte" value="<?php echo $venta->importe ;?>" required >
           </div>
       
@@ -175,7 +192,32 @@ $aProductos = $producto->cargarGrilla();
       </div>
     </div>
   </div>
+<script>
+function fBuscarPrecio(){
+    var idProducto = $("#lstProducto option:selected").val();
+      $.ajax({
+            type: "GET",
+            url: "ventaform.php?do=buscarProducto",
+            data: { id:idProducto },
+            async: true,
+            dataType: "json",
+            success: function (respuesta) {
+                $("#txtImporte").val(respuesta);
+            }
+        });
 
+}
+
+  function fCalcularTotal(){
+    var precio = $('#txtImporte').val();
+    var cantidad = $('#txtCantidad').val();
+    var resultado = precio * cantidad;
+    $("#txtTotal").val(resultado);
+    
+  }
+
+
+</script>
   <!-- Bootstrap core JavaScript-->
   <script src="vendor/jquery/jquery.min.js"></script>
   <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
