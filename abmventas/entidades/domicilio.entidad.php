@@ -19,16 +19,19 @@ class Domicilio{
     }
 
     public function insertar(){
-        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $mysql->query("INSERT INTO domicilios (
-            fk_idcliente, 
-            fk_tipo, 
-            fk_idlocalidad, 
-            domicilio) VALUE(
-            $this->fk_idcliente, 
-            $this->fk_tipo, 
-            $this->fk_idlocalidad, 
-            '$this->domicilio')");
+        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        $sql="INSERT INTO domicilios
+                                    (fk_idcliente, 
+                                    fk_tipo, 
+                                    fk_idlocalidad, 
+                                    domicilio)
+                        VALUE ($this->fk_idcliente, 
+                              $this->fk_tipo, 
+                              $this->fk_idlocalidad, 
+                              '$this->domicilio')";
+        $mysqli->query($sql);
+        $this->iddomicilio = $mysqli->insert_id;
+        $mysqli->close();
     }
     public function obtenerFiltrado($idCliente){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
@@ -39,19 +42,20 @@ class Domicilio{
            2 => 'C.nombre',
            3 => 'A.domicilio'
             );
-        $sql = "SELECT 
+        $sql = "SELECT
                     A.iddomicilio,
+                    A.fk_idcliente,
                     A.fk_tipo,
                     B.nombre AS tipo,
                     A.fk_idlocalidad,
                     C.nombre AS localidad,
-                    D.idprovincia,
+                    A.fk_idprovincia,
                     D.nombre AS provincia,
                     A.domicilio
-                    FROM domicilios A
-                    INNER JOIN tipo_domicilios B ON A.fk_tipo = B.idtipo
-                    INNER JOIN localidades C ON C.idlocalidad = A.fk_idlocalidad
-                    INNER JOIN provincias D ON D.idprovincia = C.fk_idprovincia
+                FROM domicilios A
+                INNER JOIN tipo_domicilios B ON A.fk_tipo=B.idtipo
+                INNER JOIN localidades C ON A.fk_idlocalidad=idlocalidad
+                INNER JOIN provincias D ON A.fk_idprovincia=idprovincia
                 WHERE 1=1 AND A.fk_idcliente = $idCliente 
                 ";
 
@@ -66,6 +70,7 @@ class Domicilio{
 
         $resultado = $mysqli->query($sql);
         $lstRetorno = array();
+       
         while ($fila = $resultado->fetch_assoc()) {
             $domicilio = new Domicilio();
             $domicilio->iddomicilio = $fila["iddomicilio"];

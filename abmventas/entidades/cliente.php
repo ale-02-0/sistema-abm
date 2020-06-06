@@ -57,13 +57,13 @@ class Cliente {
                 WHERE idcliente =" . $this->idcliente;
           $resultado= $mysqli->query($sql);
          
-         /*if ($fila=$resultado->fetch_assoc()){
+     if ($fila=$resultado->fetch_assoc()){
                     $this->nombre = $fila['nombre'];
                     $this->cuit = $fila['cuit'];
                     $this->telefono = $fila['telefono'];
                     $this->correo = $fila['correo'];
                     $this->fecha_nac = $fila['fecha_nac'];
-          }*/
+          }
           $mysqli->close();
         }
 
@@ -113,9 +113,7 @@ class Cliente {
         clientes A
       ORDER BY
         idcliente DESC");
-         if (!$mysqli->query($sql)) {
-          printf("Error en query: %s\n", $mysqli->error . " " . $sql);
-      }
+      
               if($resultado){
                   while ($fila = $resultado->fetch_assoc()) {
                       $obj = new Cliente();

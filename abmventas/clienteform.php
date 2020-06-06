@@ -54,7 +54,7 @@ if ($_GET) {
         echo json_encode($aLocalidad);
         exit;
     }
-/*
+
     if (isset($_GET["id"]) && $_GET["id"] > 0) {
         $id = $_GET["id"];
         $cliente->obtenerPorId($id);
@@ -93,7 +93,7 @@ if ($_GET) {
         "data" => $data
     );
     echo json_encode($json_data);
-    exit;*/
+    exit;
 }
 
 
@@ -347,7 +347,7 @@ $(document).ready( function () {
         }
 
         function fAgregarDomicilio(){
-            var grilla = $('#grilla').DataTable();
+            var grilla = $('#grilla');
             grilla.row.add([
                 $("#lstTipo option:selected").text() + "<input type='hidden' name='txtTipo[]' value='"+ $("#lstTipo option:selected").val() +"'>",
                 $("#lstProvincia option:selected").text() + "<input type='hidden' name='txtProvincia[]' value='"+ $("#lstProvincia option:selected").val() +"'>",
