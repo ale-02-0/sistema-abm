@@ -43,7 +43,7 @@ class Cliente {
           $this->idcliente = $mysqli->insert_id;
           $mysqli->close();
       }
-
+//ESTE METODO DA PROBLEMAS
       public function obtenerPorId(){
 
           $mysqli= new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO,  Config::BBDD_CLAVE,  Config::BBDD_NOMBRE);
@@ -92,7 +92,7 @@ class Cliente {
           }
         $mysqli->close();
       }
-
+//OBTENER TODOS FUNCIONA
       public function obtenerTodos(){
         $aCliente = null;
         $mysqli= new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO,  Config::BBDD_CLAVE,  Config::BBDD_NOMBRE);

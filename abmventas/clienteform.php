@@ -347,7 +347,7 @@ $(document).ready( function () {
         }
 
         function fAgregarDomicilio(){
-            var grilla = $('#grilla');
+            var grilla = $('#grilla').DataTable();
             grilla.row.add([
                 $("#lstTipo option:selected").text() + "<input type='hidden' name='txtTipo[]' value='"+ $("#lstTipo option:selected").val() +"'>",
                 $("#lstProvincia option:selected").text() + "<input type='hidden' name='txtProvincia[]' value='"+ $("#lstProvincia option:selected").val() +"'>",

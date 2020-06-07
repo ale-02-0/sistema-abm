@@ -1,5 +1,6 @@
 <?php
 
+
 ini_set('display_errors','1');
 ini_set('display_startup_errors','1');
 ini_set('error_reporting', E_ALL); 
@@ -17,7 +18,7 @@ if ($_POST){
 
     $entidadUsuario= new Usuario();
     $entidadUsuario->obtenerPorUsuario($usuario);
-
+print_r($entidadUsuario);
     
     //corroboramos datos. 
     if ($entidadUsuario->verificarClave($clave, $entidadUsuario->clave)){
@@ -34,6 +35,7 @@ if ($_POST){
     if ($usuario == "" && $clave == "" ){
         header("location: 404.php");
   }
+
 }
 ?>
 <!DOCTYPE html>
