@@ -44,7 +44,7 @@ class Cliente {
           $mysqli->close();
       }
 //ESTE METODO DA PROBLEMAS
-      public function obtenerPorId(){
+      public function obtenerPorId($idcliente){
 
           $mysqli= new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO,  Config::BBDD_CLAVE,  Config::BBDD_NOMBRE);
           $sql="SELECT  idcliente,
@@ -54,7 +54,7 @@ class Cliente {
                         correo,
                         fecha_nac 
                 FROM clientes
-                WHERE idcliente =" . $this->idcliente;
+                WHERE idcliente = $idcliente";
           $resultado= $mysqli->query($sql);
          
      if ($fila=$resultado->fetch_assoc()){

@@ -18,7 +18,7 @@ if ($_POST){
 
     $entidadUsuario= new Usuario();
     $entidadUsuario->obtenerPorUsuario($usuario);
-print_r($entidadUsuario);
+
     
     //corroboramos datos. 
     if ($entidadUsuario->verificarClave($clave, $entidadUsuario->clave)){

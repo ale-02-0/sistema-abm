@@ -41,6 +41,7 @@ class Usuario {
                ' ".  $this->correo ."');";
         $mysqli->query($sql);
         $mysqli->close();
+        print_r($sql);exit;
       }
 
     public function obtenerPorUsuario($usuario){
@@ -126,13 +127,14 @@ class Usuario {
         return $aResultado;
        }
     public function encriptarClave($clave){
+      
         $claveEncriptada = password_hash($clave, PASSWORD_DEFAULT);
         return $claveEncriptada;
     }
 
     public function verificarClave($claveIngresada, $claveEnBBDD){
-     
-      return true;
-  }
+     return password_verify($claveIngresada, $claveEnBBDD);   
+    }
+    
 }
 ?>
