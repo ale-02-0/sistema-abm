@@ -42,20 +42,19 @@ class Domicilio{
            2 => 'C.nombre',
            3 => 'A.domicilio'
             );
-        $sql = "SELECT
+        $sql = "SELECT 
                     A.iddomicilio,
-                    A.fk_idcliente,
                     A.fk_tipo,
                     B.nombre AS tipo,
                     A.fk_idlocalidad,
                     C.nombre AS localidad,
-                    A.fk_idprovincia,
+                    D.idprovincia,
                     D.nombre AS provincia,
                     A.domicilio
-                FROM domicilios A
-                INNER JOIN tipo_domicilios B ON A.fk_tipo=B.idtipo
-                INNER JOIN localidades C ON A.fk_idlocalidad=idlocalidad
-                INNER JOIN provincias D ON A.fk_idprovincia=idprovincia
+                    FROM domicilios A
+                    INNER JOIN tipo_domicilios B ON A.fk_tipo = B.idtipo
+                    INNER JOIN localidades C ON C.idlocalidad = A.fk_idlocalidad
+                    INNER JOIN provincias D ON D.idprovincia = C.fk_idprovincia
                 WHERE 1=1 AND A.fk_idcliente = $idCliente 
                 ";
 
@@ -70,7 +69,6 @@ class Domicilio{
 
         $resultado = $mysqli->query($sql);
         $lstRetorno = array();
-       
         while ($fila = $resultado->fetch_assoc()) {
             $domicilio = new Domicilio();
             $domicilio->iddomicilio = $fila["iddomicilio"];

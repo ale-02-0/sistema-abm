@@ -44,28 +44,34 @@ class Cliente {
           $mysqli->close();
       }
 //ESTE METODO DA PROBLEMAS
-      public function obtenerPorId($idcliente){
+      public function obtenerPorId(){
 
           $mysqli= new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO,  Config::BBDD_CLAVE,  Config::BBDD_NOMBRE);
-          $sql="SELECT  idcliente,
-                        nombre,
-                        cuit,
-                        telefono,
-                        correo,
-                        fecha_nac 
-                FROM clientes
-                WHERE idcliente = $idcliente";
-          $resultado= $mysqli->query($sql);
-         
-     if ($fila=$resultado->fetch_assoc()){
-                    $this->nombre = $fila['nombre'];
-                    $this->cuit = $fila['cuit'];
-                    $this->telefono = $fila['telefono'];
-                    $this->correo = $fila['correo'];
-                    $this->fecha_nac = $fila['fecha_nac'];
-          }
-          $mysqli->close();
-        }
+          $sql = "SELECT  idcliente, 
+                          nombre, 
+                          cuit, 
+                          telefono, 
+                          correo, 
+                          fecha_nac 
+                  FROM clientes 
+                  WHERE idcliente = " . $this->idcliente;
+              if (!$resultado = $mysqli->query($sql)) {
+              printf("Error en query: %s\n", $mysqli->error . " " . $sql);
+              }
+
+              //Convierte el resultado en un array asociativo
+              if($fila = $resultado->fetch_assoc()){
+              $this->idcliente = $fila["idcliente"];
+              $this->nombre = $fila["nombre"];
+              $this->cuit = $fila["cuit"];
+              $this->telefono = $fila["telefono"];
+              $this->correo = $fila["correo"];
+              $this->fecha_nac = $fila["fecha_nac"];
+              }  
+              $mysqli->close();
+
+              }
+
 
       public function eliminar(){
 
