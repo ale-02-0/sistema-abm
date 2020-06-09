@@ -69,8 +69,7 @@ $aProductos = $producto->cargarGrilla();
                          <?php foreach ($aProductos as $producto) : ;?>
                     <tr>
                         <td><?php echo $producto->nombre; ?></td>
-                        <!--<td><?php echo '$'; echo number_format( $producto->precio, 2, ",","."); ?></td>-->
-                        <td><?php echo number_format( $producto->precio, 2, ",","."); ?></td>
+                        <td><?php echo '$'.number_format( $producto->precio, 2, ",","."); ?></td>
                         <td><?php echo $producto->cantidad; ?></td>
                         <td><?php echo $producto->descripcion; ?></td>
                         <td><?php echo $producto->nombre_categoria; ?></td>
