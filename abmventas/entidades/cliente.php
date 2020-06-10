@@ -51,7 +51,8 @@ class Cliente {
                           cuit,
                           nombre,
                           telefono,
-                          correo
+                          correo,
+                          fecha_nac
                   FROM clientes
                   WHERE idcliente = $idcliente";
 
@@ -64,6 +65,7 @@ class Cliente {
               $this->nombre = $fila["nombre"];
               $this->telefono = $fila["telefono"];
               $this->correo = $fila["correo"];
+              $this->fecha_nac = $fila["fecha_nac"];
 
               return true;
           }
@@ -104,6 +106,7 @@ class Cliente {
                                     A.nombre,
                                     A.telefono,
                                     A.correo,
+                                    A.fecha_nac,
           (SELECT GROUP_CONCAT('(', C.nombre, ') ', B.domicilio, ', ', D.nombre, ', ', E.nombre SEPARATOR '<br>')	
           FROM domicilios B 
           INNER JOIN tipo_domicilios C ON C.idtipo = B.fk_tipo
@@ -124,6 +127,7 @@ class Cliente {
                       $obj->nombre = $fila["nombre"];
                       $obj->telefono = $fila["telefono"];
                       $obj->correo = $fila["correo"];
+                      $obj->fecha_nac = $fila["fecha_nac"];
                       $obj->domicilio = $fila["domicilio"];
                       $aCliente[] = $obj;
       

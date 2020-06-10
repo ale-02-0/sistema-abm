@@ -79,13 +79,16 @@ if($_POST){
 	if(isset($_POST["btnGuardar"])){
        $cliente->insertar();
        
-        for($i=0; $i< count($_POST['txtTipo']); $i++){
-                    $domicilio=new Domicilio();
-                    $domicilio->fk_tipo=$_POST['txtTipo'][$i];
-                    $domicilio->fk_idcliente=$cliente->idcliente;
-                    $domicilio->fk_idlocalidad=$_POST['txtLocalidad'][$i];
-                    $domicilio->domicilio=$_POST['txtDireccion'][$i];
-                    $domicilio->insertar();}
+            if (isset($_POST[""])){
+                for($i=0; $i < count($_POST["txtTipo"]); $i++){
+                        $domicilio = new Domicilio();
+                        $domicilio->fk_tipo = $_POST["txtTipo"][$i];
+                        $domicilio->fk_idcliente = $cliente->idcliente;
+                        $domicilio->fk_idlocalidad = $_POST["txtLocalidad"][$i];
+                        $domicilio->domicilio = $_POST["txtDomicilio"][$i];
+                        $domicilio->insertar();}
+            }
+            print_r($_POST);exit;
    }else{ if(isset($_GET["id"]) && $_GET["id"] > 0){
         //Actualizo un cliente existente
         $cliente->actualizar();

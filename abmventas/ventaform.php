@@ -20,6 +20,11 @@ if ($_POST) {
 $venta = new Venta();
 $venta->cargarFormulario($_REQUEST);
 
+$cliente = new Cliente();
+$aClientes = $cliente->obtenerTodos();
+
+$producto = new Producto();
+$aProductos = $producto->cargarGrilla();
 
 if ($_POST) {
   if (isset($_POST['btnGuardar'])) {
@@ -35,30 +40,20 @@ if ($_POST) {
 if (isset($_GET['id']) && $_GET['id'] > 0) {
   $venta->obtenerPorId();
 
-} //GET
-
-$cliente = new Cliente();
-$aClientes = $cliente->obtenerTodos();
-
-$producto = new Producto();
-$aProductos = $producto->cargarGrilla();
-
+} 
 if($_GET){
   
-if(isset($_GET["do"]) && $_GET["do"] == "buscarProducto"){
-  $idProducto = $_GET["id"];
-  $producto = new Producto();
-  $producto->idproducto = $idProducto; 
-  $producto->obtenerPorId();
-  echo json_encode($producto->precio);
-  exit;
-}
-if (isset($_GET['id']) && $_GET['id'] > 0) {
-  $producto->obtenerPorId();
-}
-
-
-}//GET 
+        if(isset($_GET["do"]) && $_GET["do"] == "buscarProducto"){
+          $idProducto = $_GET["id"];
+          $producto = new Producto();
+          $producto->idproducto = $idProducto; 
+          $producto->obtenerPorId();
+          echo json_encode($producto->precio);
+          exit;
+        }
+     
+  }//GET 
+  
 
 ?>
 <!DOCTYPE html>
@@ -72,7 +67,7 @@ if (isset($_GET['id']) && $_GET['id'] > 0) {
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>registro de producto</title>
+  <title>Registro de producto</title>
 
   <!-- Custom fonts for this template-->
   <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
