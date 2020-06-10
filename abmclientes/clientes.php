@@ -86,9 +86,6 @@ if (isset($_GET["do"]) && $_GET["do"] == "delete") {
                 <li class="nav-item active">
                     <a class="nav-link" href="#">Cliente <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">liente <span class="sr-only">(current)</span></a>
-                </li>
                 <li class="nav-item">
                     <a class="nav-link" href="#">Productos</a>
                 </li>
@@ -103,8 +100,64 @@ if (isset($_GET["do"]) && $_GET["do"] == "delete") {
                 <h1>Registro de clientes</h1>
             </div>
         </div>
-     
-                <div class="col-12">
+        <div class="col-12">
+            <div class="row-mt-2">
+                <!--ALERTA DATOS GUARDADOS-->
+                <?php if (isset($msg) && $msg != "") : ?>
+                    <div class="row p-2">
+                        <div class="col-12">
+                            <div class="alert alert-success" role="alert">
+                                <?php echo $msg; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <!--ALERTA DATOS ELIMINADOS-->
+                <?php if (isset($msgEliminado) && $msgEliminado != "") : ?>
+                    <div class="row p-2">
+                        <div class="col-12">
+                            <div class="alert alert-warning" role="alert">
+                                <?php echo $msgEliminado; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </div>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="col-12 form-group">
+                            <label for="txtDni">DNI</label>
+                            <input type="text" class="form-control" id="txtDni" name="txtDni" 
+                                required value="<?php echo isset($aClientes[$pos]["dni"]) ? $aClientes[$pos]["dni"] : ""; ?>">
+                        </div>
+                        <div class="col-12 form-group">
+                            <label for="txtNombre">Nombre y Apellido</label>
+                            <input type="text" class="form-control" id="txtNombre" name="txtNombre" 
+                                required value="<?php echo isset($aClientes[$pos]["nombre"]) ? $aClientes[$pos]["nombre"] : ""; ?>">
+                        </div>
+                        <div class="col-12 form-group">
+                            <label for="txtTelefono">Teléfono</label>
+                            <input type="text" class="form-control" id="txtTelefono" name="txtTelefono"
+                                required value="<?php echo isset($aClientes[$pos]["telefono"]) ? $aClientes[$pos]["telefono"] : ""; ?>">
+                                                                                                                           
+                        </div>
+                        <div class="col-12 form-group">
+                            <label for="txtCorreo">Correo</label>
+                            <input type="email" class="form-control" id="txtCorreo" name="txtCorreo" 
+                                required value="<?php echo isset($aClientes[$pos]["correo"]) ? $aClientes[$pos]["correo"] : ""; ?>">
+                                                                                                                            
+                        </div>
+                        <div class="col-12 form-group">
+                            <label for="">Archivo</label>
+                            <input type="file" class="form-control" name="Archivo" accept=".pdf,.png,.jpg">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" name="btnGuardar" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-6">
 
                     <table class="table table-hover border mt-2">
                         <tr>
