@@ -1,7 +1,6 @@
 <?php
 
 class Domicilio{
-    
     private $iddomicilio;
     private $fk_idcliente;
     private $fk_tipo;
@@ -19,21 +18,19 @@ class Domicilio{
     }
 
     public function insertar(){
-        $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
-        $sql="INSERT INTO domicilios
-                                    (fk_idcliente, 
-                                    fk_tipo, 
-                                    fk_idlocalidad, 
-                                    domicilio)
-                        VALUE ($this->fk_idcliente, 
-                              $this->fk_tipo, 
-                              $this->fk_idlocalidad, 
-                              '$this->domicilio')";
-        $mysqli->query($sql);
-        $this->iddomicilio = $mysqli->insert_id;
-        $mysqli->close();
+        $mysql = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
+        $mysql->query("INSERT INTO domicilios (
+            fk_idcliente, 
+            fk_tipo, 
+            fk_idlocalidad, 
+            domicilio) VALUE(
+            $this->fk_idcliente, 
+            $this->fk_tipo, 
+            $this->fk_idlocalidad, 
+            '$this->domicilio')");
     }
-    public function obtenerFiltrado($idCliente){
+
+     public function obtenerFiltrado($idCliente){
         $mysqli = new mysqli(Config::BBDD_HOST, Config::BBDD_USUARIO, Config::BBDD_CLAVE, Config::BBDD_NOMBRE);
         $request = $_REQUEST;
         $columns = array(
@@ -83,7 +80,6 @@ class Domicilio{
         }
         return $lstRetorno;
     }
-
 
 
 

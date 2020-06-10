@@ -21,28 +21,7 @@ if ($_POST) {
 
 
 $cliente = new Cliente();
-
-if ($_POST) {
-    $cliente = new Cliente();
-    $cliente->cargarFormulario($_REQUEST);
-
-    if (isset($_POST["btnGuardar"])) {
-        $cliente->insertar();
-
-        for ($i = 0; $i < count($_POST["txtTipo"]); $i++) {
-            $domicilio = new Domicilio();
-            $domicilio->fk_tipo = $_POST["txtTipo"][$i];
-            $domicilio->fk_idcliente = $cliente->idcliente;
-            $domicilio->fk_idlocalidad = $_POST["txtLocalidad"][$i];
-            $domicilio->domicilio = $_POST["txtDomicilio"][$i];
-            $domicilio->insertar();
-        }
-    } else if (isset($_POST["btnBorrar"])) {
-        $cliente->eliminar();
-    } else if (isset($_POST["btnGuardar"])) {
-        $cliente->actualizar();
-    }
-}
+$cliente->cargarFormulario($_REQUEST);
 
 
 if ($_GET) {
@@ -60,42 +39,61 @@ if ($_GET) {
         $cliente->obtenerPorId($id);
     }
 
-    if (isset($_GET["do"]) && $_GET["do"] == "cargarGrilla") {
+    if(isset($_GET["do"]) && $_GET["do"] == "cargarGrilla"){
+        $idCliente = $_GET['idCliente'];
+        $request = $_REQUEST;
+
+        $entidad = new Domicilio();
+        $aDomicilio = $entidad->obtenerFiltrado($idCliente);
+
+        $data = array();
+
+        $inicio = $request['start'];
+        $registros_por_pagina = $request['length'];
+
+        if (count($aDomicilio) > 0)
+            $cont=0;
+            for ($i=$inicio; $i < count($aDomicilio) && $cont < $registros_por_pagina; $i++) {
+                $row = array();
+                $row[] = $aDomicilio[$i]->tipo;
+                $row[] = $aDomicilio[$i]->provincia;
+                $row[] = $aDomicilio[$i]->localidad;
+                $row[] = $aDomicilio[$i]->domicilio;
+                $cont++;
+                $data[] = $row;
+            }
+
+        $json_data = array(
+            "draw" => intval($request['draw']),
+            "recordsTotal" => count($aDomicilio), //cantidad total de registros sin paginar
+            "recordsFiltered" => count($aDomicilio),//cantidad total de registros en la paginacion
+            "data" => $data
+        );
+        echo json_encode($json_data);
+        exit;
     }
-
-    $idCliente = $_GET['idCliente'];
-    $request = $_REQUEST;
-
-    $entidad = new Domicilio();
-    $aDomicilio = $entidad->obtenerFiltrado($idCliente);
-
-    $data = array();
-
-    $inicio = $request['start'];
-    $registros_por_pagina = $request['length'];
-
-    if (count($aDomicilio) > 0)
-        $cont = 0;
-    for ($i = $inicio; $i < count($aDomicilio) && $cont < $registros_por_pagina; $i++) {
-        $row = array();
-        $row[] = $aDomicilio[$i]->tipo;
-        $row[] = $aDomicilio[$i]->provincia;
-        $row[] = $aDomicilio[$i]->localidad;
-        $row[] = $aDomicilio[$i]->domicilio;
-        $cont++;
-        $data[] = $row;
-    }
-
-    $json_data = array(
-        "draw" => intval($request['draw']),
-        "recordsTotal" => count($aDomicilio), //cantidad total de registros sin paginar
-        "recordsFiltered" => count($aDomicilio), //cantidad total de registros en la paginacion
-        "data" => $data
-    );
-    echo json_encode($json_data);
-    exit;
 }
 
+if($_POST){
+   
+	if(isset($_POST["btnGuardar"])){
+       $cliente->insertar();
+       
+        for($i=0; $i< count($_POST['txtTipo']); $i++){
+                    $domicilio=new Domicilio();
+                    $domicilio->fk_tipo=$_POST['txtTipo'][$i];
+                    $domicilio->fk_idcliente=$cliente->idcliente;
+                    $domicilio->fk_idlocalidad=$_POST['txtLocalidad'][$i];
+                    $domicilio->domicilio=$_POST['txtDireccion'][$i];
+                    $domicilio->insertar();}
+   }else{ if(isset($_GET["id"]) && $_GET["id"] > 0){
+        //Actualizo un cliente existente
+        $cliente->actualizar();
+    }else{ if(isset($_POST["btnBorrar"])){
+        $cliente->eliminar();}
+        }
+    }
+}
 
 $provincia = new Provincia();
 $aProvincias = $provincia->obtenerTodos();
